@@ -12,7 +12,7 @@ CREATE TABLE endereco (
 CREATE TABLE pessoa (
     id SERIAL PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
-    data_nascimento DATE NOT NULL,
+    data_nascimento VARCHAR(10) NOT NULL,
     ativado BOOLEAN
 );
 
