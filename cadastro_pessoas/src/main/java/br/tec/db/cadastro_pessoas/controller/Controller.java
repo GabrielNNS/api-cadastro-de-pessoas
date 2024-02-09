@@ -1,18 +1,22 @@
 package br.tec.db.cadastro_pessoas.controller;
 
-import br.tec.db.cadastro_pessoas.pessoa.*;
+import br.tec.db.cadastro_pessoas.dto.PessoaCreateDTO;
+import br.tec.db.cadastro_pessoas.dto.PessoaEnderecosDTO;
+import br.tec.db.cadastro_pessoas.model.Pessoa;
+import br.tec.db.cadastro_pessoas.service.PessoaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import br.tec.db.cadastro_pessoas.dto.PessoaResponseDTO;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/pessoa")
-public class PessoaController {
+public class Controller {
 
     @Autowired
     private PessoaService pessoaService;

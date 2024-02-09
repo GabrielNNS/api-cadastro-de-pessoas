@@ -1,6 +1,6 @@
-package br.tec.db.cadastro_pessoas.pessoa;
+package br.tec.db.cadastro_pessoas.dto;
 
-import br.tec.db.cadastro_pessoas.endereco.Endereco;
+import br.tec.db.cadastro_pessoas.model.Endereco;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
