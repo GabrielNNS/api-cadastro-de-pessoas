@@ -1,8 +1,6 @@
 package br.tec.db.cadastro_pessoas.controller;
 
-import br.tec.db.cadastro_pessoas.dto.PessoaCreateDTO;
-import br.tec.db.cadastro_pessoas.dto.PessoaDeleteDTO;
-import br.tec.db.cadastro_pessoas.dto.PessoaEnderecosDTO;
+import br.tec.db.cadastro_pessoas.dto.*;
 import br.tec.db.cadastro_pessoas.model.Pessoa;
 import br.tec.db.cadastro_pessoas.service.PessoaService;
 import jakarta.validation.Valid;
@@ -11,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-import br.tec.db.cadastro_pessoas.dto.PessoaResponseDTO;
 
 import java.util.List;
 
@@ -37,12 +34,18 @@ public class Controller {
         return ResponseEntity.ok(pessoaService.getEnderecos(id));
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @Transactional
     public ResponseEntity<PessoaResponseDTO> createPessoa(@RequestBody @Valid PessoaCreateDTO data, UriComponentsBuilder uriBuilder){
         Pessoa pessoa = pessoaService.createPessoa(data);
         var uri = uriBuilder.path("/pessoa/{id}").buildAndExpand(pessoa.getId()).toUri();
         return ResponseEntity.created(uri).body(new PessoaResponseDTO(pessoa));
+    }
+
+    @PutMapping("/update/{id}")
+    @Transactional
+    public ResponseEntity<PessoaUpdateDTO> updatePessoa(@RequestBody @Valid PessoaUpdateDTO data, @PathVariable Long id){
+        return ResponseEntity.ok(pessoaService.updatePessoaByID(data, id));
     }
 
     @DeleteMapping("/delete/{id}")
