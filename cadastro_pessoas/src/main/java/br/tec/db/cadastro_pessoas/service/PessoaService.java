@@ -45,4 +45,10 @@ public class PessoaService {
         pessoa.deletaOuAtiva();
         return new PessoaDeleteDTO(pessoa);
     }
+
+    public PessoaUpdateDTO updatePessoaByID(PessoaUpdateDTO data, Long id) {
+        Pessoa pessoa = pessoaRepository.getReferenceById(id);
+        pessoa.update(data);
+        return new PessoaUpdateDTO(pessoa);
+    }
 }
