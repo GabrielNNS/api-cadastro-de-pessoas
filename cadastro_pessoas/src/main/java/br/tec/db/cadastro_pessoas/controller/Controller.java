@@ -1,6 +1,7 @@
 package br.tec.db.cadastro_pessoas.controller;
 
 import br.tec.db.cadastro_pessoas.dto.PessoaCreateDTO;
+import br.tec.db.cadastro_pessoas.dto.PessoaDeleteDTO;
 import br.tec.db.cadastro_pessoas.dto.PessoaEnderecosDTO;
 import br.tec.db.cadastro_pessoas.model.Pessoa;
 import br.tec.db.cadastro_pessoas.service.PessoaService;
@@ -42,5 +43,11 @@ public class Controller {
         Pessoa pessoa = pessoaService.createPessoa(data);
         var uri = uriBuilder.path("/pessoa/{id}").buildAndExpand(pessoa.getId()).toUri();
         return ResponseEntity.created(uri).body(new PessoaResponseDTO(pessoa));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @Transactional
+    public ResponseEntity<PessoaDeleteDTO> deletePessoa(@PathVariable Long id){
+        return ResponseEntity.ok(pessoaService.deletePessoaByID(id));
     }
 }

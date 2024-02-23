@@ -1,14 +1,12 @@
 package br.tec.db.cadastro_pessoas.service;
 
-import br.tec.db.cadastro_pessoas.dto.PessoaCreateDTO;
-import br.tec.db.cadastro_pessoas.dto.PessoaEnderecosDTO;
-import br.tec.db.cadastro_pessoas.dto.PessoaResponseDTO;
-import br.tec.db.cadastro_pessoas.dto.EnderecoCreateDTO;
+import br.tec.db.cadastro_pessoas.dto.*;
 import br.tec.db.cadastro_pessoas.model.Pessoa;
 import br.tec.db.cadastro_pessoas.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -21,7 +19,7 @@ public class PessoaService {
     private EnderecoService enderecoService;
 
     public List<PessoaResponseDTO> getAllPessoas(){
-        return pessoaRepository.findAll().stream().map(PessoaResponseDTO::new).toList();
+        return pessoaRepository.findAllByAtivadoTrue().stream().map(PessoaResponseDTO::new).toList();
     }
 
     public PessoaResponseDTO getPessoaByID(Long id) {
@@ -40,5 +38,11 @@ public class PessoaService {
         }
         pessoaRepository.save(pessoa);
         return pessoa;
+    }
+
+    public PessoaDeleteDTO deletePessoaByID(Long id) {
+        Pessoa pessoa = pessoaRepository.getReferenceById(id);
+        pessoa.deletaOuAtiva();
+        return new PessoaDeleteDTO(pessoa);
     }
 }

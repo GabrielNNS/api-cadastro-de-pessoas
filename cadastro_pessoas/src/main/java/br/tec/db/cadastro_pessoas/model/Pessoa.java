@@ -50,4 +50,8 @@ public class Pessoa {
             this.nome = data.nome();
         }
     }
+
+    public void deletaOuAtiva() {
+        this.ativado = !this.ativado;
+    }
 }
