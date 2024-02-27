@@ -1,6 +1,7 @@
 package br.tec.db.cadastro_pessoas.service;
 
 import br.tec.db.cadastro_pessoas.dto.*;
+import br.tec.db.cadastro_pessoas.exceptions.PessoaNotFoundException;
 import br.tec.db.cadastro_pessoas.model.Pessoa;
 import br.tec.db.cadastro_pessoas.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PessoaService {
@@ -23,11 +25,15 @@ public class PessoaService {
     }
 
     public PessoaResponseDTO getPessoaByID(Long id) {
-        return new PessoaResponseDTO(pessoaRepository.findById(id).get());
+        Optional<Pessoa> optionalPessoa = pessoaRepository.findById(id);
+        Pessoa pessoa = optionalPessoa.orElseThrow(() -> new PessoaNotFoundException("Pessoa não localizada pela ID " + id));
+        return new PessoaResponseDTO(pessoa);
     }
 
     public PessoaEnderecosDTO getEnderecos(Long id) {
-        return new PessoaEnderecosDTO(pessoaRepository.findById(id).get());
+        Optional<Pessoa> optionalPessoa = pessoaRepository.findById(id);
+        Pessoa pessoa = optionalPessoa.orElseThrow(() -> new PessoaNotFoundException("Pessoa não localizada pela ID " + id));
+        return new PessoaEnderecosDTO(pessoa);
     }
 
     public Pessoa createPessoa(PessoaCreateDTO data){
